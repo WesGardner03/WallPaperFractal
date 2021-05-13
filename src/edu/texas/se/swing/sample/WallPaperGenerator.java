@@ -27,7 +27,7 @@ class Pixel extends JComponent {
         g.setColor(pixelColor);  
         g.fillRect(xPosition, yPosition, 5, 5);  
       }  
-      /*
+      /**
       * creates a pixel of specified position and color
       *@param x is the x postition of the left of the object
       *@param y is the y position of the top of the object
@@ -42,7 +42,7 @@ class Pixel extends JComponent {
 	  }
 	  
 }
-/*
+/**
 * defines a Complex Number
 * this class allows for complex numbers to be created and modified 
 * these complex numbers can added, multiplied, and the modulus can be taken
