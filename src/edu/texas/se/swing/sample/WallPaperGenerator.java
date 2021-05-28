@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
 * defines a Pixel class which displays a rectangle in a 
@@ -97,6 +98,12 @@ class ComplexNumber {
 */
 class EquationBank {
 	
+	double ZOOM_X = 1; // these variables are for setting the zoom of image
+	double ZOOM_Y = 1; // a zoom of one displays the entire mandlebrot set
+	
+	double CENTER_X = 0; // these variables are for setting what point on 
+	double CENTER_Y = 0; // the complex plane is in the center of the screen
+	
 	public boolean pattern1(int x, int y){ // pattern1 and 2 were created mainly just to play 
 		return (x*y)%7 <= 5;           // around with WallPaperGenerator class,
 					       // currently vestigial code
@@ -116,9 +123,10 @@ class EquationBank {
 	public int mandlebrot(int i, int n){
 		int counter = 0;
 		
-		double a = i/300.0 -2; //the constants adjust the scale of the mandelbrot set so it displays the full set on screen
-		double b = -(n/300.0 -1.3); //hypothetically these constants could be controlled and edited to create zoom and drag functions
-		
+		double a = i/(300.0*(ZOOM_X)) -2 - CENTER_X/(300.0*(ZOOM_X));      // the constants adjust the scale of the mandelbrot set 
+		double b = -(n/(300.0*(ZOOM_Y)) -1.3 - CENTER_Y/(300.0*(ZOOM_Y))); // so it displays the full set on screen, the variables
+										   // allow the user to set the center point of the screen
+										   // as well as the bounds of the plane
 		ComplexNumber c = new ComplexNumber(a,b);				
 		
 		ComplexNumber z = new ComplexNumber(0,0);				
@@ -129,6 +137,16 @@ class EquationBank {
 			counter++;
 		}
 		return counter;
+	}
+
+	public void setZoom(double x, double y){ // setter method for the zoom variables
+		ZOOM_X = x;
+		ZOOM_Y = y;
+	}
+	
+	public void setCenter(double x, double y){ // setter method for the center variables
+		CENTER_X = x;
+		CENTER_Y = y;
 	}
 	
 }
@@ -154,6 +172,26 @@ public class WallPaperGenerator extends JFrame {
 				
 					WallPaperGenerator frame = new WallPaperGenerator();
 					EquationBank e1 = new EquationBank(); //allows access to the mandlebrot method
+					
+					Scanner scan = new Scanner(System.in); // new scanner to take input from user about zoom and center
+					
+					// this chunk lets the user choose the center of the screen by entering a point on the complex plane
+					System.out.println("enter x center (real axis)");
+					double x = scan.nextDouble();
+					System.out.println("enter y center (complex axis)");
+					double y = scan.nextDouble();
+					
+					e1.setCenter(x,y);
+					
+					// this chunk lets the user choose the zoom of the screen, the higher the number the closer the zoom
+					System.out.println("enter zoom factor for x (real axis)");
+					x = scan.nextDouble();
+					System.out.println("enter zoom factor for y (complex axis)");
+					y = scan.nextDouble();
+					
+					e1.setZoom(x,y); // the zoom function is a little obtuse, ideally it will one day be replaced with a method that 
+							 // allows the borders of the screen be set as points in the complex plane, much like how a graphing
+							 // calculator allows a window to be set
 					
 					for (int i = 0; i < 1000; i += 5){ //nested for loop iterates through 2d graphics display
 						for (int n = 0; n < 1000; n += 5){
