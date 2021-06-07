@@ -7,3 +7,5 @@ The first number input is the real value for the center
 The second number input is the complex value for the center (entering zero for both will make the center of the screen the origin)
 The third number input is the zoom along the real axis (horizontal stretch/compression)
 The fourth number input is the zoom along the complex axis (vertical stretch/compression)
+
+The extra files are for Java Swing and came with tutorial I used to downlaod Java Swing on Eclipse. I have been unable to relocate that tutorial, but those files shouldn't be anything beyond the scope of Java Swing, so as long as Java Swing is installed this program should run.
